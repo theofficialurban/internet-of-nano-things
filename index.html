@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Bio-Digital Convergence: IoNT & WBAN Strategic Assessment</title>
+
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="The Bio-Digital Convergence: IoNT & WBAN Strategic Assessment"
+    />
+    <meta
+      property="og:description"
+      content="Strategic technical assessment of Internet of Nano-Things, WBANs, and Energy Harvesting protocols."
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              mono: ["JetBrains Mono", "monospace"],
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              "neon-green": "#39ff14",
+              "neon-purple": "#b026ff",
+              "dark-bg": "#050505",
+              "panel-bg": "#0f0f0f",
+              "border-dim": "#222222",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #050505;
+        color: #e5e5e5;
+        background-image: radial-gradient(
+            circle at 50% 50%,
+            rgba(57, 255, 20, 0.03) 0%,
+            transparent 50%
+          ),
+          linear-gradient(rgba(176, 38, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(176, 38, 255, 0.03) 1px, transparent 1px);
+        background-size: 100% 100%, 40px 40px, 40px 40px;
+      }
+
+      .glow-text {
+        text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+      }
+
+      .bio-border {
+        border: 1px solid #222;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .bio-border:hover {
+        border-color: rgba(57, 255, 20, 0.3);
+        box-shadow: 0 0 15px rgba(57, 255, 20, 0.1);
+      }
+
+      .bio-border::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        width: 15px;
+        height: 15px;
+        border-top: 2px solid #39ff14;
+        border-left: 2px solid #39ff14;
+      }
+
+      .bio-border::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        right: -1px;
+        width: 15px;
+        height: 15px;
+        border-bottom: 2px solid #b026ff;
+        border-right: 2px solid #b026ff;
+      }
+
+      .pulse-line {
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #39ff14, transparent);
+        opacity: 0.3;
+        animation: pulse 3s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 0.1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 0.1;
+        }
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #050505;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #222;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #39ff14;
+      }
+    </style>
+  </head>
+  <body
+    class="font-sans antialiased selection:bg-neon-green selection:text-black"
+  >
+    <nav
+      class="fixed top-0 w-full bg-dark-bg/95 backdrop-blur-md border-b border-border-dim z-50"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <i class="fas fa-dna text-neon-green text-xl mr-3"></i>
+            <span class="font-mono font-bold text-lg tracking-wider text-white"
+              >IoNT<span class="text-neon-purple">_WBAN</span></span
+            >
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
+              <a
+                href="#overview"
+                class="text-gray-300 hover:text-neon-green px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >Overview</a
+              >
+              <a
+                href="#architecture"
+                class="text-gray-300 hover:text-neon-green px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >Architecture</a
+              >
+              <a
+                href="#energy"
+                class="text-gray-300 hover:text-neon-green px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >Harvesting</a
+              >
+              <a
+                href="#routing"
+                class="text-gray-300 hover:text-neon-green px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >LaGOON</a
+              >
+              <a
+                href="#coding"
+                class="text-neon-purple hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >LCPC Code</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <header
+      class="pt-32 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center"
+    >
+      <div
+        class="inline-block px-3 py-1 mb-4 border border-neon-green/30 rounded-full bg-neon-green/5 text-neon-green text-xs font-mono tracking-widest uppercase"
+      >
+        Protocol: Active Monitoring
+      </div>
+      <h1
+        class="text-4xl md:text-6xl font-bold text-white mb-6 glow-text tracking-tight"
+      >
+        The Bio-Digital Convergence
+      </h1>
+      <p class="text-xl text-gray-400 max-w-3xl mx-auto font-light">
+        Analysis of
+        <span class="text-white font-medium"
+          >Internet of Nano-Things (IoNT)</span
+        >, Wireless Body Area Networks (WBAN), and the Terahertz Communication
+        Paradigm.
+      </p>
+      <div
+        class="mt-8 flex justify-center space-x-4 text-sm font-mono text-gray-500"
+      >
+        <span>DOC: CRC-TAYLOR-2019</span>
+        <span>|</span>
+        <span>FREQ: 0.1-10 THz</span>
+        <span>|</span>
+        <span>CLASS: NANOSCALE</span>
+      </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-24">
+      <section id="overview" class="relative">
+        <div class="absolute -left-4 top-0 h-full w-1 bg-neon-purple/20"></div>
+        <h2
+          class="text-3xl font-bold text-white mb-6 font-mono flex items-center"
+        >
+          <span class="text-neon-green mr-4">1.0</span> Executive Overview
+        </h2>
+        <div
+          class="prose prose-invert max-w-none text-gray-300 leading-relaxed"
+        >
+          <p class="text-lg mb-4">
+            The interconnection of nanoscale devices with existing communication
+            networks defines the
+            <strong>Internet of Nano-Things (IoNT)</strong>. Driven by the
+            convergence of nanotechnology and IoT, this paradigm shifts focus
+            from macro-sensing to granular, molecular-level data acquisition.
+          </p>
+          <div class="grid md:grid-cols-3 gap-6 mt-8">
+            <div class="bg-panel-bg p-6 rounded bio-border">
+              <div class="text-neon-green text-4xl mb-4">
+                <i class="fas fa-microchip"></i>
+              </div>
+              <h3 class="text-white font-bold mb-2">Nano-Sensors</h3>
+              <p class="text-sm text-gray-400">
+                Devices 10-100nm in size detecting chemical and biological
+                stimuli. Uses graphene-based plasmonic antennas for THz band
+                communication.
+              </p>
+            </div>
+            <div class="bg-panel-bg p-6 rounded bio-border">
+              <div class="text-neon-purple text-4xl mb-4">
+                <i class="fas fa-heartbeat"></i>
+              </div>
+              <h3 class="text-white font-bold mb-2">WBAN Integration</h3>
+              <p class="text-sm text-gray-400">
+                Wireless Body Area Networks monitor vital signs (ECG, EEG,
+                Glucose) continuously, shifting healthcare from institutional to
+                preventative.
+              </p>
+            </div>
+            <div class="bg-panel-bg p-6 rounded bio-border">
+              <div class="text-neon-green text-4xl mb-4">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <h3 class="text-white font-bold mb-2">Self-Powered</h3>
+              <p class="text-sm text-gray-400">
+                Batteryless operation via microscale energy scavenging
+                (Piezoelectric, Thermoelectric, RF) is critical for implant
+                longevity.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="architecture">
+        <div class="flex items-center mb-6">
+          <h2 class="text-3xl font-bold text-white font-mono">
+            <span class="text-neon-purple mr-4">2.0</span> Network Architecture
+          </h2>
+          <div
+            class="ml-auto px-3 py-1 bg-purple-900/30 text-purple-300 text-xs font-mono rounded border border-purple-900"
+          >
+            HIERARCHY: DEFINED
+          </div>
+        </div>
+
+        <div
+          class="bg-panel-bg border border-border-dim p-8 rounded-lg relative overflow-hidden"
+        >
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div>
+              <h3 class="text-xl text-white font-bold mb-4">
+                The Nanoscale Hierarchy
+              </h3>
+              <p class="text-gray-300 mb-6">
+                The IoNT architecture requires a hierarchical approach to bridge
+                the gap between nano-communication (THz band) and the
+                macro-world (Internet).
+              </p>
+
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <div
+                    class="flex-shrink-0 h-8 w-8 rounded-full bg-neon-green/10 flex items-center justify-center border border-neon-green/30 mt-1"
+                  >
+                    <span class="text-neon-green font-mono text-xs">01</span>
+                  </div>
+                  <div class="ml-4">
+                    <h4 class="text-white font-bold text-sm">Nano-Nodes</h4>
+                    <p class="text-gray-400 text-xs">
+                      Simplest devices. Limited energy/memory. Perform simple
+                      sensing and actuation. Transmission range: Short.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <div
+                    class="flex-shrink-0 h-8 w-8 rounded-full bg-neon-green/10 flex items-center justify-center border border-neon-green/30 mt-1"
+                  >
+                    <span class="text-neon-green font-mono text-xs">02</span>
+                  </div>
+                  <div class="ml-4">
+                    <h4 class="text-white font-bold text-sm">Nano-Routers</h4>
+                    <p class="text-gray-400 text-xs">
+                      Aggregators with higher computational resources. They
+                      control nano-nodes and aggregate data for uplink.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <div
+                    class="flex-shrink-0 h-8 w-8 rounded-full bg-neon-green/10 flex items-center justify-center border border-neon-green/30 mt-1"
+                  >
+                    <span class="text-neon-green font-mono text-xs">03</span>
+                  </div>
+                  <div class="ml-4">
+                    <h4 class="text-white font-bold text-sm">
+                      Nano-Micro Interface
+                    </h4>
+                    <p class="text-gray-400 text-xs">
+                      Hybrid devices communicating in both nanoscale (THz) and
+                      microscale (classic RF). The bridge to the gateway.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="bg-black/50 p-6 rounded border border-border-dim font-mono text-sm"
+            >
+              <div class="text-neon-purple mb-4">
+                // MM-WAVE PROPAGATION MODEL
+              </div>
+              <p class="text-gray-500 mb-2">
+                /* Friis' Law application at THz frequencies */
+              </p>
+              <div class="text-gray-300">
+                P_r = G_t * G_r * (λ / 4πd)² * P_t
+              </div>
+              <p class="text-gray-500 mt-4 mb-2">/* Challenges */</p>
+              <ul class="list-disc list-inside text-gray-400 space-y-1">
+                <li>
+                  <span class="text-neon-green">Molecular Absorption:</span>
+                  High path loss due to water/oxygen resonance.
+                </li>
+                <li>
+                  <span class="text-neon-green">Scattering:</span> Severe
+                  attenuation from biological tissues.
+                </li>
+                <li>
+                  <span class="text-neon-green">Antenna Size:</span> Requires
+                  Graphene-based plasmonic antennas (SPP waves).
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="energy">
+        <h2 class="text-3xl font-bold text-white mb-6 font-mono">
+          <span class="text-neon-green mr-4">3.0</span> Energy Harvesting
+          Matrices
+        </h2>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2">
+            <div
+              class="bg-gradient-to-br from-panel-bg to-black p-6 rounded border border-border-dim h-full"
+            >
+              <h3 class="text-xl text-white font-bold mb-4">
+                Microscale Scavenging
+              </h3>
+              <p class="text-gray-300 mb-6">
+                Batteries are invasive and finite. The IoNT paradigm relies on
+                harvesting ambient energy. Hybrid systems (TEG + PZT + RF) offer
+                the highest reliability.
+              </p>
+
+              <div class="space-y-6">
+                <div>
+                  <div class="flex justify-between text-xs text-gray-400 mb-1">
+                    <span>Photovoltaic (Outdoor)</span>
+                    <span class="text-neon-green">100 mW/cm²</span>
+                  </div>
+                  <div class="w-full bg-gray-800 rounded-full h-1.5">
+                    <div
+                      class="bg-neon-green h-1.5 rounded-full"
+                      style="width: 100%"
+                    ></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs text-gray-400 mb-1">
+                    <span>Thermoelectric (Human Body ΔT)</span>
+                    <span class="text-neon-green">60 µW/cm²</span>
+                  </div>
+                  <div class="w-full bg-gray-800 rounded-full h-1.5">
+                    <div
+                      class="bg-neon-purple h-1.5 rounded-full"
+                      style="width: 45%"
+                    ></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs text-gray-400 mb-1">
+                    <span>Piezoelectric (Vibration)</span>
+                    <span class="text-neon-green">200 µW/cm³</span>
+                  </div>
+                  <div class="w-full bg-gray-800 rounded-full h-1.5">
+                    <div
+                      class="bg-blue-500 h-1.5 rounded-full"
+                      style="width: 35%"
+                    ></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs text-gray-400 mb-1">
+                    <span>RF Scavenging (GSM/WiFi)</span>
+                    <span class="text-neon-green">1 µW/cm²</span>
+                  </div>
+                  <div class="w-full bg-gray-800 rounded-full h-1.5">
+                    <div
+                      class="bg-red-500 h-1.5 rounded-full"
+                      style="width: 5%"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="bg-panel-bg p-6 rounded border-t-2 border-neon-green flex flex-col justify-center"
+          >
+            <h4 class="text-white font-bold mb-4">Piezoelectric Mechanism</h4>
+            <p class="text-xs text-gray-400 mb-4">
+              Based on charge separation. Mechanical strain in piezoelectric
+              material creates potential difference. No separate voltage source
+              required.
+            </p>
+            <div
+              class="bg-black p-3 rounded text-center border border-border-dim"
+            >
+              <span class="block text-neon-purple text-2xl font-mono mb-1"
+                >PZT</span
+              >
+              <span class="text-gray-500 text-[10px] uppercase tracking-widest"
+                >Preferred for WBAN</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="routing">
+        <h2 class="text-3xl font-bold text-white mb-6 font-mono">
+          <span class="text-neon-purple mr-4">4.0</span> LaGOON Routing Protocol
+        </h2>
+        <div class="bg-panel-bg border border-border-dim p-8 rounded-lg">
+          <div class="flex flex-col md:flex-row gap-8">
+            <div class="md:w-1/2">
+              <h3 class="text-xl text-white font-bold mb-3">
+                Last Good Neighbor (LaGOON)
+              </h3>
+              <p class="text-gray-300 mb-4 text-sm">
+                A simple, energy-efficient routing protocol designed for
+                Wireless Nanosensor Networks (WNSNs). Unlike complex TCP/IP
+                stacks, LaGOON minimizes overhead by exploiting the duplex
+                nature of wireless transmission.
+              </p>
+              <div
+                class="p-4 bg-purple-900/10 border border-purple-900/30 rounded"
+              >
+                <h4 class="text-purple-400 font-bold text-sm mb-1">
+                  Mechanism: Backward Learning
+                </h4>
+                <p class="text-xs text-gray-400">
+                  Nodes update their routing tables based on incoming packets.
+                  If a packet arrives from 'Node A' with a lower hop count,
+                  'Node A' is marked as the "Last Good Neighbor" for the return
+                  path.
+                </p>
+              </div>
+            </div>
+            <div class="md:w-1/2 space-y-3">
+              <h4 class="text-white font-bold text-sm">
+                Benchmarking vs Flooding
+              </h4>
+              <div
+                class="flex items-center justify-between p-3 bg-black rounded border border-border-dim"
+              >
+                <span class="text-gray-400 text-xs">DROP Events</span>
+                <span class="text-neon-green font-mono text-xs"
+                  >-85% vs Flooding</span
+                >
+              </div>
+              <div
+                class="flex items-center justify-between p-3 bg-black rounded border border-border-dim"
+              >
+                <span class="text-gray-400 text-xs"
+                  >Energy (CHARGED events)</span
+                >
+                <span class="text-neon-green font-mono text-xs">Optimized</span>
+              </div>
+              <div
+                class="flex items-center justify-between p-3 bg-black rounded border border-border-dim"
+              >
+                <span class="text-gray-400 text-xs">Complexity</span>
+                <span class="text-neon-green font-mono text-xs"
+                  >O(1) Lookup</span
+                >
+              </div>
+              <p class="text-xs text-gray-500 mt-2 italic">
+                *LaGOON avoids the "Broadcast Storm" problem inherent in simple
+                flooding.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="coding" class="pt-6">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl md:text-4xl font-bold text-white font-mono mb-2">
+            <span class="text-neon-green">5.0</span> LCPC Error Correction
+          </h2>
+          <p class="text-gray-400">
+            Low-Complexity Parity Check Codes for WBAN Reliability
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div
+            class="group relative bg-panel-bg border border-border-dim hover:border-neon-green transition-all duration-300 rounded overflow-hidden p-6"
+          >
+            <div
+              class="absolute top-0 left-0 w-1 h-full bg-gray-800 group-hover:bg-neon-green transition-colors"
+            ></div>
+            <h3 class="text-white font-bold mb-2">
+              The Problem: LDPC Complexity
+            </h3>
+            <p class="text-gray-400 text-sm mb-4">
+              Standard LDPC (Low-Density Parity-Check) codes require large
+              matrices and iterative decoding (10-50 iterations), consuming too
+              much power for nanosensors.
+            </p>
+            <div class="bg-black p-3 font-mono text-xs text-red-400">
+              > LDPC Latency: High<br />
+              > Memory Req: Large<br />
+              > Iterations: >20
+            </div>
+          </div>
+
+          <div
+            class="group relative bg-panel-bg border border-border-dim hover:border-neon-purple transition-all duration-300 rounded overflow-hidden p-6"
+          >
+            <div
+              class="absolute top-0 left-0 w-1 h-full bg-gray-800 group-hover:bg-neon-purple transition-colors"
+            ></div>
+            <h3 class="text-white font-bold mb-2">The Solution: LCPC Codes</h3>
+            <p class="text-gray-400 text-sm mb-4">
+              LCPC extends Hamming codes to correct single and double-bit errors
+              without iteration. Uses a simple lookup table approach.
+            </p>
+            <div class="bg-black p-3 font-mono text-xs text-neon-green">
+              > LCPC Latency: Low<br />
+              > Memory Req: ~501 bits<br />
+              > Iterations: 0
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="mt-6 bg-gray-900/50 p-6 rounded border border-dashed border-gray-700 text-center"
+        >
+          <p class="text-gray-300 text-sm">
+            <span class="text-neon-purple font-bold">Performance Gain:</span>
+            LCPC (9,4) provides a
+            <span class="text-white font-bold">3 dB coding gain</span> over LDPC
+            at BER 10⁻⁵ with significantly reduced computational load.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-border-dim bg-black py-12">
+      <div class="max-w-5xl mx-auto px-4 text-center">
+        <p class="text-gray-600 text-sm font-mono mb-4">
+          "The Internet of Nano-Things is not just a network; it is the
+          integration of the cyber-physical world at the molecular level."
+        </p>
+        <p class="text-gray-700 text-xs">
+          Generated based on 'Internet of Nano-Things and WBAN' (Al-Turjman,
+          2019)
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
